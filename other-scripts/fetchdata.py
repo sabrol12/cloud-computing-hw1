@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# get the api kep
 API_KEY = os.getenv("YELP_API_KEY")
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
@@ -16,11 +15,9 @@ HEADERS = {
     "Authorization": f"Bearer {API_KEY}"
 }
 
-# yelp endpoint
 URL = "https://api.yelp.com/v3/businesses/search"
 
 
-#get the restaurants
 def get_restaurants(term, location="New York, NY", total=200):
     restaurants = []
     offset = 0
@@ -75,7 +72,7 @@ for cuisine in cuisines:
     print(f"Total pulled for {cuisine}: {len(results)}")
 
     for r in results:
-        all_restaurants[r["id"]] = r  # overwrite prevents duplicates
+        all_restaurants[r["id"]] = r  
 
 
 print("\n====================================")
@@ -101,7 +98,6 @@ for r in all_restaurants.values():
     clean_restaurants.append(cleaned)
 
 
-# -------- Write to JSON File --------
 output_file = "yelp_restaurants.json"
 
 with open(output_file, "w", encoding="utf-8") as f:

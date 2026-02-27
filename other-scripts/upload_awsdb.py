@@ -4,14 +4,11 @@ from boto3.dynamodb.conditions import Attr
 from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-# ---------- CONFIG ----------
 REGION = "us-east-1"
 TABLE_NAME = "yelpdb-hw1"
 OPENSEARCH_ENDPOINT = "https://search-hw1-4grt6d7skljecgsv6qpcqrha5q.us-east-1.es.amazonaws.com"
 SAMPLES_PER_CUISINE = 30
-# ----------------------------
 
-# DynamoDB connection (uses aws configure credentials)
 dynamodb = boto3.resource("dynamodb", region_name=REGION)
 table = dynamodb.Table(TABLE_NAME)
 
@@ -92,38 +89,3 @@ for cuisine_term in cuisines:
     grand_total += uploaded_count
 
 print(f"\nDONE. Total uploaded across cuisines: {grand_total}")
-
-
-# def convert_numbers(record):
-#     record["numReviews"] = Decimal(str(record["numReviews"]))
-#     record["rating"] = Decimal(str(record["rating"]))
-#     record["coordinates"]["latitude"] = Decimal(str(record["coordinates"]["latitude"]))
-#     record["coordinates"]["longitude"] = Decimal(str(record["coordinates"]["longitude"]))
-#     return record
-
-# def main():
-#     print("Loading JSON file...")
-
-#     with open(JSON_FILE, "r") as f:
-#         restaurants = json.load(f)
-
-#     print(f"Total records in file: {len(restaurants)}")
-
-#     # ✅ Limit to first 30 for testing
-#     restaurants = restaurants[:TEST_LIMIT]
-
-#     print(f"Inserting {len(restaurants)} test records...")
-
-#     inserted = 0
-
-#     with table.batch_writer() as batch:
-#         for r in restaurants:
-#             r = convert_numbers(r)
-#             r["insertedAtTimestamp"] = datetime.utcnow().isoformat()
-#             batch.put_item(Item=r)
-#             inserted += 1
-
-#     print(f"✅ Inserted {inserted} records successfully.")
-
-# if __name__ == "__main__":
-#     main()
